@@ -618,36 +618,6 @@
       }
     }
 
-
-      /* Botón de control de audio */
-      #audioControl {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--neon-yellow), #ffaa00);
-        border: 3px solid white;
-        color: var(--dark-purple);
-        font-size: 1.8em;
-        cursor: pointer;
-        z-index: 1000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
-        transition: all 0.3s ease;
-      }
-
-      #audioControl:hover {
-        transform: scale(1.15);
-        box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
-      }
-
-      #audioControl.visible {
-        display: flex;
-      }
     /* Botón Home */
     #homeBtn {
       position: fixed;
@@ -1041,9 +1011,6 @@
     <div id="dadoResultado"></div>
   </div>
 
-  <!-- Botón de control de audio -->
-  <button id="audioControl" onclick="toggleAudio()">🔊</button>
-
 <script>
 let cartas = [];
 let reglas = [];
@@ -1105,11 +1072,6 @@ function showPlayersScreen() {
   document.getElementById('home').style.display = 'none';
   document.getElementById('players').style.display = 'flex';
 }
-    
-    // Iniciar música de fondo
-    const bgMusic = document.getElementById("backgroundMusic");
-    bgMusic.volume = 0.3; // Volumen bajo pero audible
-    bgMusic.play().catch(e => console.log("Audio play failed:", e));
 
 function addPlayerInput() {
   const playerInputs = document.getElementById('playerInputs');
