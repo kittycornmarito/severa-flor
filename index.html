@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Severa Flor</title>
+  <!-- Fuente scary solo para threeman -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <!-- Fuente gruesa sans-serif para el resto -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Variables CSS para colores */
+    :root {
+      --primary-purple: #6b005c;
+      --dark-purple: #3a003f;
+      --darker-purple: #1b0028;
+      --neon-pink: #ff008c;
+      --neon-red: #ff0044;
+      --neon-green: #00c853;
+      --neon-yellow: #ffcc00;
+    }
+
+    /* Fondo con gradiente animado */
+    body { 
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      margin: 0; 
+      padding: 0; 
+      background: linear-gradient(135deg, var(--darker-purple), var(--dark-purple), var(--primary-purple)); 
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: white; 
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Efecto de partículas en el fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent);
+      background-size: 200% 200%;
+      animation: stars 20s linear infinite;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    @keyframes stars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100%); }
+    }
+
+    #home, #instructions, #players, #game { 
+      display: none; 
+      height: 100vh; 
+      width: 100vw; 
+      overflow: hidden; 
+    }
+
+    #home { 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+    }
+
+    /* Título mejorado con efecto neón */
+    h1 { 
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 4.5em; 
+      margin-bottom: 40px; 
+      text-shadow: 
+        0 0 10px var(--neon-pink), 
+        0 0 20px var(--neon-pink),
+        0 0 30px var(--neon-pink),
+        0 0 40px var(--neon-pink),
+        0 0 70px var(--neon-pink),
+        0 0 80px var(--neon-pink);
+      animation: neonPulse 2s ease-in-out infinite;
+      letter-spacing: 5px;
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2.5em;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { 
+        text-shadow: 
+          0 0 10px var(--neon-pink), 
+          0 0 20px var(--neon-pink),
+          0 0 30px var(--neon-pink),
+          0 0 40px var(--neon-pink);
+      }
+      50% { 
+        text-shadow: 
+          0 0 20px var(--neon-pink), 
+          0 0 30px var(--neon-pink),
+          0 0 40px var(--neon-pink),
+          0 0 50px var(--neon-pink),
+          0 0 70px var(--neon-pink);
+      }
+    }
+
+    /* Botones del menú principal mejorados */
+    #home button, #instructions button {
+      margin: 15px;
+      padding: 20px 50px;
+      font-size: 1.5em;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: white;
+      cursor: pointer;
+      box-shadow: 
+        0 0 20px rgba(255, 65, 108, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #home button::before, #instructions button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    #home button:hover::before, #instructions button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    #home button:hover, #instructions button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 
+        0 0 30px rgba(255, 65, 108, 0.8),
+        0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #home button:active, #instructions button:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+      /* Estilos específicos para botones de home */
+      #home button:first-of-type {
+        padding: 15px 35px;
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      #home button:last-of-type {
+        padding: 25px 60px;
+        font-size: 1.8em;
+        margin-top: 10px;
+      }
+
+      /* Botón de cierre de instrucciones */
+      #closeInstructionsBtn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--neon-red), var(--dark-purple));
+        border: 2px solid white;
+        color: white;
+        font-size: 1.5em;
+        cursor: pointer;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(255, 0, 68, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      #closeInstructionsBtn:hover {
+        transform: scale(1.15) rotate(90deg);
+        box-shadow: 0 0 30px rgba(255, 0, 68, 0.8);
+      }
+
+    /* Instrucciones */
+    #instructions { 
+      overflow-y: scroll; 
+      text-align: center; 
+      padding: 20px; 
+    }
+
+    #instructions img { 
+      width: 90%; 
+      max-width: 500px; 
+      margin: 20px auto; 
+      display: block; 
+      border-radius: 12px; 
+      box-shadow: 
+        0 6px 20px rgba(0,0,0,0.6),
+        0 0 20px rgba(255, 0, 140, 0.3); 
+    }
+
+    /* Pantalla de Jugadores */
+    #players {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #players h2 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    #playersForm {
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .player-input-container {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .player-input-container input {
+      flex: 1;
+      padding: 15px;
+      font-size: 1.2em;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      border: 2px solid var(--neon-pink);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .player-input-container input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255, 0, 140, 0.5);
+      transform: scale(1.02);
+    }
+
+    .player-input-container input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .remove-player-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #ff0044, #ff4466);
+      color: white;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .remove-player-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 0 20px rgba(255, 0, 68, 0.8);
+    }
+
+    #addPlayerBtn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #00c853, #00ff88);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #addPlayerBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+    }
+
+    #addPlayerBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #startGameBtn {
+      width: 100%;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #startGameBtn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 65, 108, 0.9);
+    }
+
+    #startGameBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .player-count {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 1.1em;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 10px var(--neon-yellow);
+    }
+
+    /* Game */
+    #game { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      position: relative; 
+    }
+
+    /* Indicador de turno */
+    #turnIndicator {
+        display: none; /* Oculto por defecto */
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2em;
+      color: white;
+      text-shadow: 
+        0 0 10px var(--neon-pink),
+        0 0 20px var(--neon-pink),
+        0 0 30px var(--neon-pink);
+      z-index: 100;
+      padding: 15px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      border: 2px solid var(--neon-pink);
+      animation: turnPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes turnPulse {
+      0%, 100% { 
+        transform: translateX(-50%) scale(1); 
+      }
+      50% { 
+        transform: translateX(-50%) scale(1.05); 
+      }
+    }
+
+    /* Contenedor de cartas mejorado */
+    #card-container { 
+      position: relative; 
+      width: 350px; 
+      height: 500px; 
+      margin: 20px auto; 
+      perspective: 1500px;
+    }
+
+    /* Cartas con efectos 3D mejorados - MUY RÁPIDAS */
+    .card { 
+      width: 100%; 
+      height: 100%; 
+      position: absolute; 
+      top: 0; 
+      left: 0;
+      background-size: cover; 
+      background-position: center;
+      border-radius: 20px; 
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.8),
+        0 0 30px rgba(255, 0, 140, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.1); 
+      animation: popIn 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+      cursor: grab;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transform-style: preserve-3d;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card:active {
+      cursor: grabbing;
+    }
+
+    .card:hover {
+      box-shadow: 
+        0 25px 50px rgba(0,0,0,0.9),
+        0 0 40px rgba(255, 0, 140, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes popIn {
+      0% { 
+        transform: scale(0.5) rotateY(-30deg) translateY(-50px); 
+        opacity: 0; 
+      }
+      60% {
+        transform: scale(1.1) rotateY(10deg) translateY(10px);
+      }
+      100% { 
+        transform: scale(1) rotateY(0) translateY(0); 
+        opacity: 1; 
+      }
+    }
+
+    /* Animación de swipe ULTRA RÁPIDA */
+    .card.swiping-left {
+      animation: swipeLeft 0.2s ease-out forwards;
+    }
+
+    .card.swiping-right {
+      animation: swipeRight 0.2s ease-out forwards;
+    }
+
+    @keyframes swipeLeft {
+      to {
+        transform: translateX(-150%) rotate(-30deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes swipeRight {
+      to {
+        transform: translateX(150%) rotate(30deg);
+        opacity: 0;
+      }
+    }
+
+    /* Botones mejorados con efectos 3D */
+    #buttons { 
+      margin-top: 30px; 
+      display: flex; 
+      gap: 60px; 
+    }
+
+    .round-btn { 
+      width: 90px; 
+      height: 90px; 
+      border-radius: 50%; 
+      border: none; 
+      font-size: 2.5em; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+    }
+
+    .round-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .round-btn:hover::before {
+      width: 200px;
+      height: 200px;
+    }
+
+    .round-btn:hover { 
+      transform: scale(1.3) rotate(10deg); 
+    }
+
+    .round-btn:active {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    #btn-left { 
+      background: linear-gradient(135deg, #ff0044, #ff4466); 
+      color: white; 
+      box-shadow: 
+        0 0 30px rgba(255, 0, 68, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.4); 
+    }
+
+    #btn-left:hover {
+      box-shadow: 
+        0 0 40px rgba(255, 0, 68, 0.9),
+        0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    #btn-right { 
+      background: linear-gradient(135deg, #00c853, #00ff88); 
+      color: white; 
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.4); 
+    }
+
+    #btn-right:hover {
+      box-shadow: 
+        0 0 40px rgba(0, 255, 136, 0.9),
+        0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Botón Reiniciar mejorado con efecto 3D */
+    #resetBtn {
+      margin-top: 20px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: white;
+      font-size: 2em;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 65, 108, 0.5);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      animation: pulse 2s infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #resetBtn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    #resetBtn:hover::before {
+      width: 200px;
+      height: 200px;
+    }
+
+    #resetBtn:hover {
+      transform: scale(1.2) rotate(180deg);
+      box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(255, 65, 108, 0.8);
+    }
+
+    #resetBtn:active {
+      transform: scale(1.05) rotate(180deg);
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+      }
+      50% { 
+        transform: scale(1.1) rotate(5deg); 
+      }
+    }
+
+
+      /* Botón de control de audio */
+      #audioControl {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--neon-yellow), #ffaa00);
+        border: 3px solid white;
+        color: var(--dark-purple);
+        font-size: 1.8em;
+        cursor: pointer;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      #audioControl:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+      }
+
+      #audioControl.visible {
+        display: flex;
+      }
+    /* Botón Home */
+    #homeBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1.8em;
+      cursor: pointer;
+      box-shadow: 
+        0 0 20px rgba(102, 126, 234, 0.5),
+        0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: none; /* Oculto por defecto */
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+    }
+
+    #homeBtn:hover {
+      transform: scale(1.15) rotate(-10deg);
+      box-shadow: 
+        0 0 30px rgba(102, 126, 234, 0.8),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    #homeBtn:active {
+      transform: scale(1.05);
+    }
+
+    /* Sidebar reglas mejorado */
+    #rulesSidebar { 
+      position: fixed; 
+      top: 0; 
+      right: -320px; 
+      width: 320px; 
+      height: 100%; 
+      background: linear-gradient(180deg, #1a0033, #2d0052);
+      color: white; 
+      overflow-y: auto; 
+      transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+      padding: 20px; 
+      z-index: 999; 
+      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+      border-left: 2px solid rgba(255, 204, 0, 0.3);
+    }
+
+    #rulesSidebar.open {
+      right: 0;
+    }
+
+    #rulesSidebar h3 { 
+      text-align: center; 
+      color: var(--neon-yellow); 
+      font-size: 1.5em;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      text-shadow: 0 0 10px var(--neon-yellow);
+      margin-bottom: 20px;
+    }
+
+    #rulesSidebar img { 
+      width: 100%; 
+      margin-bottom: 15px; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
+    }
+
+    #rulesSidebar img:hover {
+      transform: scale(1.05);
+    }
+
+    #toggleRules { 
+        display: none; /* Oculto por defecto */
+      position: fixed; 
+      top: 20px; 
+      right: 20px; 
+      background: linear-gradient(135deg, var(--neon-yellow), #ffaa00); 
+      border: none; 
+      padding: 15px 20px; 
+      border-radius: 12px; 
+      cursor: pointer; 
+      z-index: 1000; 
+      box-shadow: 
+        0 0 20px rgba(255, 204, 0, 0.5),
+        0 6px 15px rgba(0, 0, 0, 0.3); 
+      font-size: 1.2em;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      transition: all 0.3s ease;
+    }
+
+    #toggleRules:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 0 30px rgba(255, 204, 0, 0.8),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Pantalla Threeman mejorada - SOLO AQUÍ USA CREEPSTER */
+    #threemanOverlay {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: radial-gradient(circle, rgba(150, 0, 0, 0.98), rgba(80, 0, 0, 0.98));
+      color: white;
+      font-size: 5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+      font-family: 'Creepster', cursive;
+      letter-spacing: 8px;
+      text-shadow: 
+        0 0 20px #ff0000, 
+        0 0 40px #ff0000,
+        0 0 60px #ff0000,
+        0 0 80px #ff0000;
+      opacity: 1;
+      animation: ghostIn 1s ease;
+      transition: opacity 1s ease;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @keyframes ghostIn {
+      0% { 
+        opacity: 0; 
+        transform: scale(0.5); 
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% { 
+        opacity: 1; 
+        transform: scale(1); 
+      }
+    }
+
+    /* Mensaje de blink "TOMA EL THREEMAN" */
+    #blinkMessage {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Creepster', cursive;
+      font-size: 4em;
+      color: white;
+      text-shadow: 
+        0 0 20px #ff0000, 
+        0 0 40px #ff0000,
+        0 0 60px #ff0000;
+      z-index: 10000;
+      display: none;
+      letter-spacing: 6px;
+      animation: blinkMessagePulse 0.3s ease-in-out infinite;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @keyframes blinkMessagePulse {
+      0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+      }
+      50% { 
+        transform: translate(-50%, -50%) scale(1.1); 
+      }
+    }
+
+    /* Animación de bounce mejorada */
+    @keyframes bounce {
+      0%, 100% { 
+        transform: translateY(0) scale(1); 
+      }
+      25% {
+        transform: translateY(-30px) scale(1.05);
+      }
+      50% { 
+        transform: translateY(-40px) scale(1.1) rotate(5deg); 
+      }
+      75% {
+        transform: translateY(-30px) scale(1.05) rotate(-5deg);
+      }
+    }
+
+    .bounce { 
+      animation: bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2; 
+    }
+
+    /* Animación de blink mejorada - 3 blinks rojo y blanco */
+    @keyframes blinkRedWhite {
+      0% { 
+        background: linear-gradient(135deg, #1b0028, #3a003f, #6b005c);
+      }
+      16.66% { 
+        background: #ff0000;
+        box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.5);
+      }
+      33.33% { 
+        background: #ffffff;
+        box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.5);
+      }
+      50% { 
+        background: #ff0000;
+        box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.5);
+      }
+      66.66% { 
+        background: #ffffff;
+        box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.5);
+      }
+      83.33% { 
+        background: #ff0000;
+        box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.5);
+      }
+      100% { 
+        background: linear-gradient(135deg, #1b0028, #3a003f, #6b005c);
+      }
+    }
+
+    body.blink-active { 
+      animation: blinkRedWhite 1.8s ease-in-out; 
+    }
+
+    /* Dado mejorado - SOLO VISIBLE EN JUEGO */
+    #dado { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 20px; 
+      text-align: center; 
+      z-index: 100;
+      display: none; /* Oculto por defecto */
+    }
+
+    #dado.visible {
+      display: block;
+    }
+
+    #dado img { 
+      width: 100px; 
+      cursor: pointer; 
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)); 
+      transition: all 0.3s ease;
+    }
+
+    #dado img:hover { 
+      transform: scale(1.15) rotate(15deg); 
+      filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+    }
+
+    #dado img:active {
+      transform: scale(1.05) rotate(5deg);
+    }
+
+    /* Animación de giro del dado */
+    #dado img.spinning {
+      animation: spinDice 0.5s ease-out;
+    }
+
+    @keyframes spinDice {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    #dadoResultado { 
+      font-size: 2.5em; 
+      margin-top: 10px; 
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      text-shadow: 
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px var(--neon-pink); 
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 3em; }
+      #card-container { width: 280px; height: 400px; }
+      .round-btn { width: 70px; height: 70px; font-size: 2em; }
+      #buttons { gap: 40px; }
+      #threemanOverlay { font-size: 2.5em; }
+      #blinkMessage { font-size: 2em; }
+      #resetBtn { width: 70px; height: 70px; font-size: 1.5em; }
+      #dado img { width: 80px; }
+      #dadoResultado { font-size: 2em; }
+      #homeBtn { width: 50px; height: 50px; font-size: 1.5em; }
+      #turnIndicator { font-size: 1.5em; top: 15px; }
+      #playersForm { padding: 20px; }
+      .player-input-container input { font-size: 1em; padding: 12px; }
+    }
+
+    /* Scrollbar personalizado */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--neon-pink), var(--primary-purple));
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--neon-yellow), var(--neon-pink));
+    }
+  </style>
+</head>
+<body>
+  <!-- Overlay Threeman -->
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" loop>
+      <source src="https://www.bensound.com/bensound-music/bensound-ukulele.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="horrorSound">
+      <source src="https://www.bensound.com/bensound-music/bensound-creepy.mp3" type="audio/mpeg">
+    </audio>
+  <div id="threemanOverlay">ERES EL THREEMAN</div>
+
+  <!-- Mensaje de blink -->
+  <div id="blinkMessage">TOMAS</div>
+
+  <div id="home">
+    <h1>Severa Flor</h1>
+    <button onclick="showPlayersScreen()">🎮 Jugar</button>
+    <button onclick="showInstructions()">📖 Instrucciones</button>
+  </div>
+
+  <div id="instructions">
+      <button id="closeInstructionsBtn" onclick="backHome()">✖</button>
+    <h2>Instrucciones</h2>
+    <img src="instrucciones/1.png" alt="Instrucción 1">
+    <img src="instrucciones/2.png" alt="Instrucción 2">
+    <img src="instrucciones/3.png" alt="Instrucción 3">
+    <br><button onclick="backHome()">⬅️ Volver</button>
+  </div>
+
+  <!-- Pantalla de Jugadores -->
+  <div id="players">
+    <h2>👥 Agregar Jugadores</h2>
+    <div id="playersForm">
+      <div id="playerInputs">
+        <div class="player-input-container">
+          <input type="text" placeholder="Jugador 1" maxlength="20" class="player-name-input">
+        </div>
+      </div>
+      <button id="addPlayerBtn" onclick="addPlayerInput()">➕ Agregar Jugador</button>
+      <p class="player-count">Jugadores: <span id="playerCount">1</span>/8</p>
+      <button id="startGameBtn" onclick="startGameWithPlayers()">🎮 Comenzar Juego</button>
+    </div>
+  </div>
+
+  <div id="game">
+    <!-- Botón Home -->
+    <button id="homeBtn" onclick="goToHome()">🏠</button>
+    
+    <!-- Indicador de turno -->
+    <div id="turnIndicator">Turno de <span id="currentPlayerName">Jugador</span></div>
+    
+    <div id="card-container"></div>
+    <div id="buttons">
+      <button id="btn-left" class="round-btn" onclick="swipeLeft()">✖</button>
+      <button id="btn-right" class="round-btn" onclick="swipeRight()">✔</button>
+    </div>
+    <button id="toggleRules" onclick="toggleRules()">📜 Reglas</button>
+    <button id="resetBtn" onclick="resetGame()">🔄</button>
+  </div>
+
+  <!-- Sidebar de reglas -->
+  <div id="rulesSidebar">
+    <h3>Reglas guardadas</h3>
+    <div id="rules-list"></div>
+  </div>
+
+  <!-- Dado - Solo visible en juego -->
+  <div id="dado">
+    <img src="img/dado4.png" alt="D4" onclick="lanzarDado()">
+    <div id="dadoResultado"></div>
+  </div>
+
+  <!-- Botón de control de audio -->
+  <button id="audioControl" onclick="toggleAudio()">🔊</button>
+
+<script>
+let cartas = [];
+let reglas = [];
+let eliminacion = [];
+let currentCardIndex = 0;
+let savedRules = [];
+
+// Sistema de jugadores
+let players = [];
+let currentPlayerIndex = 0;
+
+// 🔴 Threeman
+let threemanMode = false;
+let threemanCount = 0;
+const cartaThreeman = "150.png";
+const cartasEspeciales = ["142.png","138.png","125.png","107.png","103.png",
+                          "87.png","85.png","79.png","78.png","77.png","76.png",
+                          "75.png","4.png"];
+
+// Variables para swipe
+let startX = 0;
+let startY = 0;
+let currentX = 0;
+let currentY = 0;
+  let audioEnabled = true;
+let isDragging = false;
+
+function loadCards() {
+  for (let i = 4; i <= 164; i++) {
+    if ((i >= 57 && i <= 70)) continue;
+    cartas.push("cartas/" + i + ".png");
+  }
+  for (let i = 57; i <= 70; i++) {
+    if (i === 60 || i === 61) continue;
+    reglas.push("reglas/" + i + ".png");
+    cartas.push("reglas/" + i + ".png");
+  }
+  eliminacion.push("eliminacion/60.png");
+  eliminacion.push("eliminacion/61.png");
+  cartas.push("eliminacion/60.png");
+  cartas.push("eliminacion/61.png");
+  cartas = cartas.sort(() => Math.random() - 0.5);
+}
+
+function showInstructions() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('instructions').style.display = 'block';
+  document.getElementById('dado').classList.remove('visible');
+}
+
+function backHome() {
+  document.getElementById('instructions').style.display = 'none';
+  document.getElementById('players').style.display = 'none';
+  document.getElementById('home').style.display = 'flex';
+  document.getElementById('dado').classList.remove('visible');
+}
+
+function showPlayersScreen() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('players').style.display = 'flex';
+}
+    
+    // Iniciar música de fondo
+    const bgMusic = document.getElementById("backgroundMusic");
+    bgMusic.volume = 0.3; // Volumen bajo pero audible
+    bgMusic.play().catch(e => console.log("Audio play failed:", e));
+
+function addPlayerInput() {
+  const playerInputs = document.getElementById('playerInputs');
+  const currentCount = playerInputs.children.length;
+  
+  if (currentCount >= 8) {
+    alert('Máximo 8 jugadores permitidos');
+    return;
+  }
+  
+  const container = document.createElement('div');
+  container.className = 'player-input-container';
+  
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = `Jugador ${currentCount + 1}`;
+  input.maxLength = 20;
+  input.className = 'player-name-input';
+  
+  const removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-player-btn';
+  removeBtn.innerHTML = '✖';
+  removeBtn.onclick = function() {
+    if (playerInputs.children.length > 1) {
+      container.remove();
+      updatePlayerCount();
+      updatePlayerPlaceholders();
+    } else {
+      alert('Debe haber al menos 1 jugador');
+    }
+  };
+  
+  container.appendChild(input);
+  container.appendChild(removeBtn);
+  playerInputs.appendChild(container);
+  
+  updatePlayerCount();
+  updateAddButtonState();
+}
+
+function updatePlayerCount() {
+  const count = document.getElementById('playerInputs').children.length;
+  document.getElementById('playerCount').textContent = count;
+  updateAddButtonState();
+}
+
+function updateAddButtonState() {
+  const count = document.getElementById('playerInputs').children.length;
+  const addBtn = document.getElementById('addPlayerBtn');
+  addBtn.disabled = count >= 8;
+}
+
+function updatePlayerPlaceholders() {
+  const inputs = document.querySelectorAll('.player-name-input');
+  inputs.forEach((input, index) => {
+    if (!input.value) {
+      input.placeholder = `Jugador ${index + 1}`;
+    }
+  });
+}
+
+function startGameWithPlayers() {
+  const inputs = document.querySelectorAll('.player-name-input');
+  players = [];
+  
+  inputs.forEach((input, index) => {
+    const name = input.value.trim() || `Jugador ${index + 1}`;
+    players.push(name);
+  });
+  
+  if (players.length === 0) {
+    alert('Debe haber al menos 1 jugador');
+    return;
+  }
+  
+  currentPlayerIndex = 0;
+  startGame();
+}
+
+function goToHome() {
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('home').style.display = 'flex';
+  document.getElementById('dado').classList.remove('visible');
+  // Cerrar sidebar si está abierto
+    // Ocultar botones de navegación y banner de jugador
+    document.getElementById("homeBtn").style.display = "none";
+    document.getElementById("toggleRules").style.display = "none";
+    document.getElementById("turnIndicator").style.display = "none";
+  document.getElementById('rulesSidebar').classList.remove('open');
+    document.getElementById("audioControl").classList.remove("visible");
+  
+  // Resetear jugadores
+  players = [];
+  currentPlayerIndex = 0;
+}
+
+function startGame() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('instructions').style.display = 'none';
+  document.getElementById('players').style.display = 'none';
+  document.getElementById('game').style.display = 'flex';
+  document.getElementById('dado').classList.add('visible');
+    
+    // Mostrar botones de navegación y banner de jugador
+    document.getElementById("homeBtn").style.display = "flex";
+    document.getElementById("toggleRules").style.display = "block";
+    document.getElementById("turnIndicator").style.display = "block";
+    document.getElementById("audioControl").classList.add("visible");
+  
+  loadCards();
+  updateTurnIndicator();
+  showNextCard();
+}
+
+  function updateTurnIndicator() {
+    // Si está en modo threeman, mostrar el jugador que lo activó
+    const displayPlayer = threemanMode ? threemanPlayer : players[currentPlayerIndex];
+    document.getElementById("currentPlayerName").textContent = displayPlayer;
+  }
+
+function nextTurn() {
+  currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+  updateTurnIndicator();
+}
+
+function showNextCard() {
+  let container = document.getElementById("card-container");
+  container.innerHTML = "";
+  
+  if (currentCardIndex < cartas.length) {
+    let card = document.createElement("div");
+    card.className = "card";
+    card.style.backgroundImage = "url('" + cartas[currentCardIndex] + "')";
+    container.appendChild(card);
+    
+    // Agregar event listeners para swipe
+    setupSwipeListeners(card);
+  } else {
+    container.innerHTML = "<p style='font-size: 1.5em; text-align: center; font-weight: 900;'>🎉 No quedan más cartas 🎉</p>";
+  }
+}
+
+// Configurar listeners para swipe (touch y mouse)
+function setupSwipeListeners(card) {
+  // Touch events (móvil)
+  card.addEventListener('touchstart', handleTouchStart, false);
+  card.addEventListener('touchmove', handleTouchMove, false);
+  card.addEventListener('touchend', handleTouchEnd, false);
+  
+  // Mouse events (PC)
+  card.addEventListener('mousedown', handleMouseDown, false);
+  document.addEventListener('mousemove', handleMouseMove, false);
+  document.addEventListener('mouseup', handleMouseUp, false);
+}
+
+// Funciones para touch (móvil)
+function handleTouchStart(e) {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  isDragging = true;
+}
+
+function handleTouchMove(e) {
+  if (!isDragging) return;
+  
+  currentX = e.touches[0].clientX;
+  currentY = e.touches[0].clientY;
+  
+  let diffX = currentX - startX;
+  let diffY = currentY - startY;
+  
+  // Aplicar transformación a la carta
+  let rotation = diffX * 0.1;
+  e.target.style.transform = `translateX(${diffX}px) translateY(${diffY}px) rotate(${rotation}deg)`;
+  
+  // Cambiar opacidad según la distancia
+  let opacity = 1 - Math.abs(diffX) / 300;
+  e.target.style.opacity = Math.max(0.5, opacity);
+}
+
+function handleTouchEnd(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  
+  let diffX = currentX - startX;
+  
+  // Si el swipe es suficientemente largo
+  if (Math.abs(diffX) > 100) {
+    if (diffX > 0) {
+      // Swipe derecha
+      e.target.classList.add('swiping-right');
+      setTimeout(() => processCard("right"), 150);
+    } else {
+      // Swipe izquierda
+      e.target.classList.add('swiping-left');
+      setTimeout(() => processCard("left"), 150);
+    }
+  } else {
+    // Volver a la posición original
+    e.target.style.transform = '';
+    e.target.style.opacity = '1';
+  }
+}
+
+// Funciones para mouse (PC)
+function handleMouseDown(e) {
+  startX = e.clientX;
+  startY = e.clientY;
+  isDragging = true;
+  e.target.style.cursor = 'grabbing';
+}
+
+function handleMouseMove(e) {
+  if (!isDragging) return;
+  
+  currentX = e.clientX;
+  currentY = e.clientY;
+  
+  let diffX = currentX - startX;
+  let diffY = currentY - startY;
+  
+  let card = document.querySelector('.card');
+  if (!card) return;
+  
+  // Aplicar transformación a la carta
+  let rotation = diffX * 0.1;
+  card.style.transform = `translateX(${diffX}px) translateY(${diffY}px) rotate(${rotation}deg)`;
+  
+  // Cambiar opacidad según la distancia
+  let opacity = 1 - Math.abs(diffX) / 300;
+  card.style.opacity = Math.max(0.5, opacity);
+}
+
+function handleMouseUp(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  
+  let card = document.querySelector('.card');
+  if (!card) return;
+  
+  card.style.cursor = 'grab';
+  
+  let diffX = currentX - startX;
+  
+  // Si el swipe es suficientemente largo
+  if (Math.abs(diffX) > 100) {
+    if (diffX > 0) {
+      // Swipe derecha
+      card.classList.add('swiping-right');
+      setTimeout(() => processCard("right"), 150);
+    } else {
+      // Swipe izquierda
+      card.classList.add('swiping-left');
+      setTimeout(() => processCard("left"), 150);
+    }
+  } else {
+    // Volver a la posición original
+    card.style.transform = '';
+    card.style.opacity = '1';
+  }
+}
+
+function swipeLeft() { 
+  let card = document.querySelector('.card');
+  if (card) {
+    card.classList.add('swiping-left');
+    setTimeout(() => processCard("left"), 150);
+  }
+}
+
+function swipeRight() { 
+  let card = document.querySelector('.card');
+  if (card) {
+    card.classList.add('swiping-right');
+    setTimeout(() => processCard("right"), 150);
+  }
+}
+
+function processCard(direction) {
+  if (currentCardIndex >= cartas.length) return;
+  
+  let card = cartas[currentCardIndex];
+  let cardName = card.split("/").pop();
+
+  if (cardName === cartaThreeman && direction === "right") {
+    threemanMode = true;
+    threemanCount = 0;
+    mostrarOverlay();
+  }
+
+  if (reglas.includes(card) && direction === "right") {
+    savedRules.push(card);
+    updateRules();
+  }
+
+  if (eliminacion.includes(card)) {
+    savedRules = [];
+    updateRules();
+  }
+
+  if (threemanMode && cartasEspeciales.includes(cardName)) {
+    activarEfectos();
+  }
+
+  currentCardIndex++;
+  
+  // Cambiar turno después de procesar la carta
+  nextTurn();
+  
+  setTimeout(() => showNextCard(), 250);
+}
+
+function updateRules() {
+  let list = document.getElementById("rules-list");
+  list.innerHTML = "";
+  savedRules.forEach(rule => {
+    let img = document.createElement("img");
+    img.src = rule;
+    list.appendChild(img);
+  });
+}
+
+function resetGame() {
+  cartas = [];
+  reglas = [];
+  eliminacion = [];
+  currentCardIndex = 0;
+  savedRules = [];
+  threemanMode = false;
+  threemanCount = 0;
+  currentPlayerIndex = 0;
+  document.getElementById("rules-list").innerHTML = "";
+  document.getElementById("dadoResultado").innerText = "";
+  loadCards();
+  updateTurnIndicator();
+  showNextCard();
+}
+
+function toggleRules() {
+  let sidebar = document.getElementById("rulesSidebar");
+  sidebar.classList.toggle('open');
+}
+
+// 🔴 Threeman funciones
+function mostrarOverlay() {
+  const overlay = document.getElementById("threemanOverlay");
+  const currentPlayer = players[currentPlayerIndex];
+  overlay.innerHTML = `${currentPlayer.toUpperCase()}<br>ES EL THREEMAN`;
+  overlay.style.display = "flex";
+  overlay.style.opacity = "1";
+    
+    // Reproducir sonido de terror
+    const horrorSound = document.getElementById("horrorSound");
+    horrorSound.volume = 0.6;
+    horrorSound.currentTime = 0;
+    horrorSound.play().catch(e => console.log("Horror sound failed:", e));
+  
+  setTimeout(() => { 
+    overlay.style.opacity = "0"; 
+  }, 4000);
+  
+  setTimeout(() => { 
+    overlay.style.display = "none"; 
+    overlay.style.opacity = "1"; 
+  }, 5000);
+}
+
+function activarEfectos() {
+    
+    // Reproducir sonido de terror
+    const horrorSound = document.getElementById("horrorSound");
+    horrorSound.volume = 0.6;
+    horrorSound.currentTime = 0;
+    horrorSound.play().catch(e => console.log("Horror sound failed:", e));
+  const currentPlayer = players[currentPlayerIndex];
+  
+  // Mostrar mensaje "TOMAS"
+  const blinkMessage = document.getElementById("blinkMessage");
+  blinkMessage.innerHTML = `${currentPlayer.toUpperCase()}<br>TOMAS`;
+  blinkMessage.style.display = "block";
+  
+  // Activar animación de blink en el body (3 blinks rojo y blanco)
+  document.body.classList.add("blink-active");
+  
+  // Remover la clase y ocultar mensaje después de que termine la animación
+  setTimeout(() => {
+    document.body.classList.remove("blink-active");
+    blinkMessage.style.display = "none";
+  }, 1800);
+
+  // Animación de bounce en la carta
+  const card = document.querySelector(".card");
+  if (card) {
+    card.classList.add("bounce");
+    setTimeout(() => card.classList.remove("bounce"), 1600);
+  }
+
+  // Girar el dado automáticamente
+  girarDadoAutomatico();
+
+  threemanCount++;
+  if (threemanCount >= 3) {
+    threemanMode = false;
+    threemanCount = 0;
+    cartas.push("cartas/150.png");
+  }
+}
+
+// Función para girar el dado automáticamente
+function girarDadoAutomatico() {
+  const dadoImg = document.querySelector("#dado img");
+  const dadoResultado = document.getElementById("dadoResultado");
+  
+  // Agregar animación de giro
+  dadoImg.classList.add("spinning");
+  
+  // Generar resultado aleatorio
+  const resultado = Math.floor(Math.random() * 4) + 1;
+  
+  // Mostrar resultado después de la animación
+  setTimeout(() => {
+    dadoImg.classList.remove("spinning");
+    dadoResultado.style.transform = "scale(0)";
+    setTimeout(() => {
+      dadoResultado.innerText = resultado;
+      dadoResultado.style.transform = "scale(1.2)";
+      setTimeout(() => {
+        dadoResultado.style.transform = "scale(1)";
+      }, 200);
+    }, 100);
+  }, 500);
+}
+
+// Dado manual
+function lanzarDado() {
+  const dadoImg = document.querySelector("#dado img");
+  const dadoResultado = document.getElementById("dadoResultado");
+  
+  // Agregar animación de giro
+  dadoImg.classList.add("spinning");
+  
+  const resultado = Math.floor(Math.random() * 4) + 1;
+  
+  // Animación del resultado
+  setTimeout(() => {
+    dadoImg.classList.remove("spinning");
+    dadoResultado.style.transform = "scale(0)";
+    setTimeout(() => {
+      dadoResultado.innerText = resultado;
+      dadoResultado.style.transform = "scale(1.2)";
+      setTimeout(() => {
+        dadoResultado.style.transform = "scale(1)";
+      }, 200);
+    }, 100);
+  }, 500);
+  
+  if (threemanMode && resultado === 3) {
+    activarEfectos();
+  }
+}
+
+// Agregar transición al resultado del dado
+  // Manejar tecla ESC para cerrar instrucciones
+  // Función para controlar el audio
+  function toggleAudio() {
+    const bgMusic = document.getElementById("backgroundMusic");
+    const audioBtn = document.getElementById("audioControl");
+    
+    audioEnabled = !audioEnabled;
+    
+    if (audioEnabled) {
+      bgMusic.play().catch(e => console.log("Audio play failed:", e));
+      audioBtn.innerHTML = "🔊";
+    } else {
+      bgMusic.pause();
+      audioBtn.innerHTML = "🔇";
+    }
+  }
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" || event.key === "Esc") {
+      const instructionsDiv = document.getElementById("instructions");
+      if (instructionsDiv.style.display === "block") {
+        backHome();
+      }
+    }
+  });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dadoResultado = document.getElementById("dadoResultado");
+  dadoResultado.style.transition = "transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+});
+</script>
+</body>
+</html>
